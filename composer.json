@@ -1,0 +1,60 @@
+{
+    "name": "vonq/social-media-management",
+    "type": "project",
+    "description": "",
+    "require": {
+        "php": "^7.2.17",
+        "symfony/framework-bundle": "^4.2",
+        "symfony/console": "^4.2",
+        "symfony/process": "^4.2",
+        "symfony/messenger": "^4.2",
+        "symfony/monolog-bundle": "^3.3",
+        "symfony/dotenv": "^4.2",
+
+        "friendsofsymfony/rest-bundle": "^2.4",
+        "jms/serializer-bundle": "^2.4",
+        "symfony/twig-bundle": "^4.2",
+
+        "ocramius/proxy-manager": "2.2.*",
+
+        "doctrine/dbal": "^2.8",
+        "doctrine/orm": "^2.6",
+
+        "lambdish/phunctional": "^1.0",
+
+        "swiftmailer/swiftmailer": "^5.4",
+
+        "ramsey/uuid": "^3.8",
+        "doctrine/doctrine-bundle": "^1.10",
+        "symfony/asset": "^4.2",
+        "dpolac/twig-lambda": "^1.0",
+        "doctrine/doctrine-migrations-bundle": "^2.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master",
+
+        "phpunit/phpunit": "^6.5",
+        "symfony/phpunit-bridge": "^4.2",
+        "mockery/mockery": "^1.0",
+        "fzaninotto/faker": "^1.7",
+        "squizlabs/php_codesniffer": "^2.9",
+        "friends-of-behat/symfony-extension": "^2.0",
+
+        "phpstan/phpstan": "^0.10.3",
+        "phpstan/phpstan-mockery": "^0.10.2"
+    },
+    "scripts": {
+        "phpunit": "phpunit",
+        "test": ["@phpunit"]
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": ["src"]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Test\\": ["tests"]
+        }
+    }
+}

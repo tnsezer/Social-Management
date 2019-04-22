@@ -1,0 +1,6 @@
+services:
+  app.controller.meeting:
+    class: App\Controller\Meeting\MeetingController
+    public: true
+    autowire: true
+    tags: ['controller.service_arguments']

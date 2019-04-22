@@ -1,0 +1,40 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <span class="title"><h2>{{ meeting.getName() }}</h2></span>
+    <div class="buttonSpan">
+        <a class="btn" onclick="send('{{ path('user_meeting_participation') }}', {{ app.session.get('userid') }}, {{ meeting.getId() }}, 1);">Going (<span class="going">{{ meeting.getUsersRelation()|filter(=> _.getParticipation() == 1)|length }}</span>)</a>
+        <a class="btn" onclick="send('{{ path('user_meeting_participation') }}', {{ app.session.get('userid') }}, {{ meeting.getId() }}, 0);">Not Going (<span class="notgoing">{{ meeting.getUsersRelation()|filter(=> _.getParticipation() == 0)|length }}</span>)</a>
+    </div>
+
+    <h3>User List</h3>
+    <div class="userList">
+        <h3>Going</h3>
+        {% for user in meeting.getUsersRelation()|filter(=> _.getParticipation() == 1) %}
+            <div class="user">{{ user.getUser().getName() }}</div>
+        {% else %}
+            <div class="nodata">No User</div>
+        {% endfor %}
+        <h3>Not Going</h3>
+        {% for user in meeting.getUsersRelation()|filter(=> _.getParticipation() == 0) %}
+            <div class="user">{{ user.getUser().getName() }}</div>
+        {% else %}
+            <div class="nodata">No User</div>
+        {% endfor %}
+    </div>
+    <script type="text/javascript">
+        function send(uri, userId, meetingId, participation) {
+            $.post(
+                uri,
+                {
+                    'userId': userId,
+                    'meetingId': meetingId,
+                    'participation': participation
+                }
+            ).done(function(result) {
+                $('.going').text(result.going);
+                $('.notgoing').text(result.notgoing);
+            });
+        }
+    </script>
+{% endblock content %}

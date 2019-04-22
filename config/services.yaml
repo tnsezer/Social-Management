@@ -1,0 +1,203 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'en'
+    kernel.secret: '%env(APP_SECRET)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        autowire: false
+        autoconfigure: true
+        public: true
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php,Shared,User}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    dpolac.twig_lambda.extension:
+        class: DPolac\TwigLambda\LambdaExtension
+        tags: [ { name: twig.extension } ]
+
+    Redis:
+        class: Redis
+        calls:
+            - method: connect
+              arguments:
+                  - '%env(REDIS_HOST)%'
+                  - '%env(int:REDIS_PORT)%'
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@Redis'
+
+    App\Shared\Domain\Bus\Command\Command:
+        abstract:  true
+
+
+    UserRepository:
+        class: App\SocialManagement\User\Infrastructure\Persistence\UserRepository
+        public: true
+        arguments: ['@doctrine.orm.entity_manager']
+    App\SocialManagement\User\Application\Command\UserCommand:
+        parent: App\Shared\Domain\Bus\Command\Command
+        autowire: true
+        autoconfigure: false
+        public: true
+        arguments:
+          - '@Symfony\Component\Messenger\MessageBusInterface'
+          - '@UserRepository'
+    App\SocialManagement\User\Application\Command\UserCommandHandler:
+        autowire: true
+        autoconfigure: true
+        public: true
+        arguments:
+          - '@UserRepository'
+    App\SocialManagement\User\Application\Query\UserQuery:
+        public: true
+        autowire: true
+        arguments:
+          - '@UserRepository'
+
+
+    GroupRepository:
+        class: App\SocialManagement\Group\Infrastructure\Persistence\GroupRepository
+        public: true
+        arguments: ['@doctrine.orm.entity_manager']
+    App\SocialManagement\Group\Application\Command\GroupCommand:
+        parent: App\Shared\Domain\Bus\Command\Command
+        autowire: true
+        autoconfigure: false
+        public: true
+        arguments:
+          - '@Symfony\Component\Messenger\MessageBusInterface'
+          - '@GroupRepository'
+    App\SocialManagement\Group\Application\Command\GroupCommandHandler:
+        autowire: true
+        autoconfigure: true
+        public: true
+        arguments:
+          - '@GroupRepository'
+    App\SocialManagement\Group\Application\Query\GroupQuery:
+        public: true
+        autowire: true
+        arguments:
+          - '@GroupRepository'
+
+
+    MeetingRepository:
+        class: App\SocialManagement\Meeting\Infrastructure\Persistence\MeetingRepository
+        public: true
+        arguments: ['@doctrine.orm.entity_manager']
+    App\SocialManagement\Meeting\Application\Command\MeetingCommand:
+        parent: App\Shared\Domain\Bus\Command\Command
+        autowire: true
+        autoconfigure: false
+        public: true
+        arguments:
+          - '@Symfony\Component\Messenger\MessageBusInterface'
+          - '@MeetingRepository'
+    App\SocialManagement\Meeting\Application\Command\MeetingCommandHandler:
+        autowire: true
+        autoconfigure: true
+        public: true
+        arguments:
+          - '@MeetingRepository'
+    App\SocialManagement\Meeting\Application\Query\MeetingQuery:
+        public: true
+        autowire: true
+        arguments:
+          - '@MeetingRepository'
+
+
+    UserGroupRepository:
+        class: App\SocialManagement\UserGroup\Infrastructure\Persistence\UserGroupRepository
+        public: true
+        arguments: ['@doctrine.orm.entity_manager']
+    App\SocialManagement\UserGroup\Application\Command\UserGroupCommand:
+        parent: App\Shared\Domain\Bus\Command\Command
+        autowire: true
+        autoconfigure: false
+        public: true
+        arguments:
+          - '@Symfony\Component\Messenger\MessageBusInterface'
+          - '@UserGroupRepository'
+    App\SocialManagement\UserGroup\Application\Command\UserGroupCommandHandler:
+        autowire: true
+        autoconfigure: true
+        public: true
+        arguments:
+          - '@UserGroupRepository'
+    App\SocialManagement\UserGroup\Application\Command\UserGroupDeleteCommand:
+        parent: App\Shared\Domain\Bus\Command\Command
+        autowire: true
+        autoconfigure: false
+        public: true
+        arguments:
+          - '@Symfony\Component\Messenger\MessageBusInterface'
+          - '@UserGroupRepository'
+    App\SocialManagement\UserGroup\Application\Command\UserGroupDeleteCommandHandler:
+        autowire: true
+        autoconfigure: true
+        public: true
+        arguments:
+          - '@UserGroupRepository'
+    App\SocialManagement\UserGroup\Application\Query\UserGroupQuery:
+        public: true
+        autowire: true
+        arguments:
+          - '@UserGroupRepository'
+
+
+    UserMeetingRepository:
+        class: App\SocialManagement\UserMeeting\Infrastructure\Persistence\UserMeetingRepository
+        public: true
+        arguments: ['@doctrine.orm.entity_manager']
+    App\SocialManagement\UserMeeting\Application\Command\UserMeetingCommand:
+        parent: App\Shared\Domain\Bus\Command\Command
+        autowire: true
+        autoconfigure: false
+        public: true
+        arguments:
+          - '@Symfony\Component\Messenger\MessageBusInterface'
+          - '@UserMeetingRepository'
+    App\SocialManagement\UserMeeting\Application\Command\UserMeetingCommandHandler:
+        autowire: true
+        autoconfigure: true
+        public: true
+        arguments:
+          - '@UserMeetingRepository'
+    App\SocialManagement\UserMeeting\Application\Command\UserMeetingDeleteCommand:
+        parent: App\Shared\Domain\Bus\Command\Command
+        autowire: true
+        autoconfigure: false
+        public: true
+        arguments:
+          - '@Symfony\Component\Messenger\MessageBusInterface'
+          - '@UserMeetingRepository'
+    App\SocialManagement\UserMeeting\Application\Command\UserMeetingDeleteCommandHandler:
+        autowire: true
+        autoconfigure: true
+        public: true
+        arguments:
+          - '@UserMeetingRepository'
+    App\SocialManagement\UserMeeting\Application\Query\UserMeetingQuery:
+        public: true
+        autowire: true
+        arguments:
+          - '@UserMeetingRepository'
+
+imports:
+  - { resource: config.yml }

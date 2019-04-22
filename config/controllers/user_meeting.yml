@@ -1,0 +1,6 @@
+services:
+  app.controller.user_meeting:
+    class: App\Controller\UserMeeting\UserMeetingController
+    public: true
+    autowire: true
+    tags: ['controller.service_arguments']

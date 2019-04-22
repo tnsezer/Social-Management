@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" id="bootstrap-css">
+    <script type="text/javascript" src="{{ asset('scripts/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('scripts/bootstrap.min.js') }}"></script>
+</head>
+<body>
+<div>
+    {% block content %}
+    {% endblock content %}
+</div>
+
+{% if app.request.hasPreviousSession %}
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="flash-{{ type }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
+</body>
+</html>

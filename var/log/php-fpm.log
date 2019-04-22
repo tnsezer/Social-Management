@@ -1,0 +1,30 @@
+[20-Apr-2019 13:12:24] NOTICE: [pool www] 'user' directive is ignored when FPM is not running as root
+[20-Apr-2019 13:12:24] NOTICE: [pool www] 'group' directive is ignored when FPM is not running as root
+[20-Apr-2019 13:12:24] NOTICE: fpm is running, pid 1
+[20-Apr-2019 13:12:43] NOTICE: ready to handle connections
+[20-Apr-2019 17:27:48] NOTICE: Terminating ...
+[20-Apr-2019 17:27:48] NOTICE: exiting, bye-bye!
+[20-Apr-2019 19:42:11] NOTICE: fpm is running, pid 1
+[20-Apr-2019 19:42:11] NOTICE: ready to handle connections
+[21-Apr-2019 20:35:09] NOTICE: Terminating ...
+[21-Apr-2019 20:35:10] NOTICE: exiting, bye-bye!
+[21-Apr-2019 20:35:17] NOTICE: fpm is running, pid 1
+[21-Apr-2019 20:35:17] NOTICE: ready to handle connections
+[21-Apr-2019 20:40:56] NOTICE: Terminating ...
+[21-Apr-2019 20:40:56] NOTICE: exiting, bye-bye!
+[21-Apr-2019 20:41:23] NOTICE: fpm is running, pid 1
+[21-Apr-2019 20:41:23] NOTICE: ready to handle connections
+[22-Apr-2019 19:51:39] NOTICE: Terminating ...
+[22-Apr-2019 19:51:43] NOTICE: exiting, bye-bye!
+[22-Apr-2019 21:24:56] NOTICE: [pool www] 'user' directive is ignored when FPM is not running as root
+[22-Apr-2019 21:24:56] NOTICE: [pool www] 'group' directive is ignored when FPM is not running as root
+[22-Apr-2019 21:24:56] NOTICE: fpm is running, pid 1
+[22-Apr-2019 21:24:56] NOTICE: ready to handle connections
+[22-Apr-2019 21:42:31] NOTICE: Terminating ...
+[22-Apr-2019 21:42:31] NOTICE: exiting, bye-bye!
+[22-Apr-2019 21:53:09] NOTICE: [pool www] 'user' directive is ignored when FPM is not running as root
+[22-Apr-2019 21:53:09] NOTICE: [pool www] 'group' directive is ignored when FPM is not running as root
+[22-Apr-2019 21:53:09] NOTICE: fpm is running, pid 1
+[22-Apr-2019 21:53:09] NOTICE: ready to handle connections
+[22-Apr-2019 22:58:57] NOTICE: Terminating ...
+[22-Apr-2019 22:58:58] NOTICE: exiting, bye-bye!

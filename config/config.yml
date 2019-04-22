@@ -1,0 +1,9 @@
+imports:
+  - { resource: controllers/_controllers.yml }
+  - { resource: rest/_rest.yml }
+  - { resource: doctrine.yml }
+
+framework:
+  secret: '%env(APP_SECRET)%'
+  session:
+    handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler

@@ -1,0 +1,46 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <span class="title"><h2>{{ group.getName() }}</h2> ({{ group.getUsersRelation().count() }})</span>
+    <div class="buttonSpan">
+    {% if isJoin %}
+        <a class="btn" href="{{ path('user_group_leave_group', {'userId': app.session.get('userid'), 'groupId': group.getId()}) }}">Leave</a>
+    {% else %}
+        <a class="btn" href="{{ path('user_group_join_group', {'userId': app.session.get('userid'), 'groupId': group.getId()}) }}">Join</a>
+    {% endif %}
+    </div>
+
+    {% for meeting in group.getMeetings() %}
+        <div class="meeting">
+            <span class="meetingName"><a href="{{ path('meeting_get', {'id': meeting.getId()}) }}">{{ meeting.getName() }}</a></span>
+            <span class="meetingButton">
+                <a class="btn" onclick="send('{{ path('user_meeting_participation') }}', {{ app.session.get('userid') }}, {{ meeting.getId() }}, 1);">Going (<span class="going_{{ meeting.getId() }}">{{ meeting.getUsersRelation()|filter(=> _.getParticipation() == 1)|length }}</span>)</a>
+                <a class="btn" onclick="send('{{ path('user_meeting_participation') }}', {{ app.session.get('userid') }}, {{ meeting.getId() }}, 0);">Not Going (<span class="notgoing_{{ meeting.getId() }}">{{ meeting.getUsersRelation()|filter(=> _.getParticipation() == 0)|length }}</span>)</a>
+            </span>
+        </div>
+    {% endfor %}
+
+    <h3>User List</h3>
+    <div class="userList">
+        {% for user in group.getUsersRelation() %}
+            <div class="user">{{ user.getUser().getName() }}</div>
+        {% else %}
+            <div class="nodata">No User</div>
+        {% endfor %}
+    </div>
+    <script type="text/javascript">
+        function send(uri, userId, meetingId, participation) {
+            $.post(
+                uri,
+                {
+                    'userId': userId,
+                    'meetingId': meetingId,
+                    'participation': participation
+                }
+            ).done(function(result) {
+                $('.going_' + meetingId).text(result.going);
+                $('.notgoing_' + meetingId).text(result.notgoing);
+            });
+        }
+    </script>
+{% endblock content %}

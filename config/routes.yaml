@@ -1,0 +1,74 @@
+user_login:
+  path: /user/login
+  defaults: { _controller: app.controller.user::login }
+  methods: [POST]
+
+user_create:
+  path: /user/create/{name}/{email}/{password}
+  defaults: { _controller: app.controller.user::create }
+  methods: [GET,POST]
+
+
+group_get:
+  path: /group/{id<\d+>}
+  defaults: { _controller: app.controller.group::find }
+  methods: [GET]
+
+group_index:
+  path: /group
+  defaults: { _controller: app.controller.group::index }
+  methods: [GET]
+
+group_create:
+  path: /group/create/{name}
+  defaults: { _controller: app.controller.group::create }
+  methods: [GET,POST]
+
+
+user_group_get:
+  path: /usergroup/{id<\d+>}
+  defaults: { _controller: app.controller.user_group::find }
+  methods: [GET]
+
+user_group_join_group:
+  path: /usergroup/join/{userId<\d+>}/{groupId<\d+>}
+  defaults: { _controller: app.controller.user_group::joinGroup }
+  methods: [GET,POST]
+
+user_group_leave_group:
+  path: /usergroup/leave/{userId<\d+>}/{groupId<\d+>}
+  defaults: { _controller: app.controller.user_group::leaveGroup }
+  methods: [GET,POST]
+
+
+
+meeting_get:
+  path: /meeting/{id<\d+>}
+  defaults: { _controller: app.controller.meeting::find }
+  methods: [GET]
+
+meeting_create:
+  path: /meeting/create/{groupId<\d+>}/{name}
+  defaults: { _controller: app.controller.meeting::create }
+  methods: [GET,POST]
+
+
+user_meeting_get:
+  path: /usermeeting/{id<\d+>}
+  defaults: { _controller: app.controller.user_meeting::find }
+  methods: [GET]
+
+user_meeting_participation:
+  path: /usermeeting/attend
+  defaults: { _controller: app.controller.user_meeting::participationStatus }
+  methods: [GET,POST]
+
+user_meeting_delete:
+  path: /usermeeting/delete/{userId<\d+>}/{meetingId<\d+>}
+  defaults: { _controller: app.controller.user_meeting::delete }
+  methods: [GET,POST]
+
+login:
+  path: /
+  controller: App\Controller\LoginController:index
+  methods: [GET]

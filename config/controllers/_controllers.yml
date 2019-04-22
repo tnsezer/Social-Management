@@ -1,0 +1,6 @@
+imports:
+  - { resource: user.yml }
+  - { resource: group.yml }
+  - { resource: meeting.yml }
+  - { resource: user_group.yml }
+  - { resource: user_meeting.yml }

@@ -1,0 +1,23 @@
+server {
+    listen 80;
+
+    server_name 0.0.0.0 ${NGINX_HOST};
+
+    set $ROOT /var/www/html;
+
+    location /.idea/ {
+        location ~* \.(?!php)$ {
+            deny all;
+        }
+
+        location ~* \.(php)$ {
+            root $ROOT;
+            fastcgi_pass   fastcgi_backend;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+    }
+
+    include /var/www/html/nginx.conf.sample;
+}
